@@ -1,16 +1,20 @@
 
 package com.dinnerbone.bukkit.home;
 
-import com.avaje.ebean.validation.Length;
-import com.avaje.ebean.validation.NotEmpty;
-import com.avaje.ebean.validation.NotNull;
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import com.avaje.ebean.validation.Length;
+import com.avaje.ebean.validation.NotEmpty;
+import com.avaje.ebean.validation.NotNull;
 
 @Entity()
 @Table(name="hb_home")
@@ -20,6 +24,9 @@ public class Home {
 
     @NotNull
     private String playerName;
+    
+    @NotNull
+    private UUID uniqueId;
 
     @Length(max=30)
     @NotEmpty
@@ -59,6 +66,15 @@ public class Home {
         this.name = name;
     }
 
+    
+    public UUID getUniqueId() {
+    	return uniqueId;
+    }
+    
+    public void setUniqueId(UUID uuid) {
+    	this.uniqueId = uuid;
+    }
+    
     public String getPlayerName() {
         return playerName;
     }
@@ -68,11 +84,13 @@ public class Home {
     }
 
     public Player getPlayer() {
-        return Bukkit.getServer().getPlayer(playerName);
+        // return Bukkit.getServer().getPlayer(playerName);
+    	return Bukkit.getServer().getPlayer(uniqueId);
     }
 
     public void setPlayer(Player player) {
         this.playerName = player.getName();
+        this.uniqueId = player.getUniqueId();
     }
 
     public String getWorldName() {

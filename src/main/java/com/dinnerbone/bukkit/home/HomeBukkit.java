@@ -1,16 +1,19 @@
 
 package com.dinnerbone.bukkit.home;
 
-import com.dinnerbone.bukkit.home.commands.GoHomeCommand;
-import com.dinnerbone.bukkit.home.commands.ListHomesCommand;
-import com.dinnerbone.bukkit.home.commands.SetHomeCommand;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.PersistenceException;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.dinnerbone.bukkit.home.commands.GoHomeCommand;
+import com.dinnerbone.bukkit.home.commands.ListHomesCommand;
+import com.dinnerbone.bukkit.home.commands.SetHomeCommand;
 
 public class HomeBukkit extends JavaPlugin {
     public void onDisable() {
@@ -30,7 +33,9 @@ public class HomeBukkit extends JavaPlugin {
 
     private void setupDatabase() {
         try {
+        	this.getLogger().info("Home: Starting DB ...");
             getDatabase().find(Home.class).findRowCount();
+        	this.getLogger().info(".... done");
         } catch (PersistenceException ex) {
             System.out.println("Installing database for " + getDescription().getName() + " due to first time usage");
             installDDL();
@@ -40,7 +45,9 @@ public class HomeBukkit extends JavaPlugin {
     @Override
     public List<Class<?>> getDatabaseClasses() {
         List<Class<?>> list = new ArrayList<Class<?>>();
+        this.getLogger().info("Home: retrieving DB ...");
         list.add(Home.class);
+        this.getLogger().info("Home: ... done");
         return list;
     }
 
@@ -55,14 +62,9 @@ public class HomeBukkit extends JavaPlugin {
 
     public static Player getPlayer(CommandSender sender, String[] args, int index) {
         if (args.length > index) {
-            List<Player> players = sender.getServer().matchPlayer(args[index]);
-
-            if (players.isEmpty()) {
-                sender.sendMessage("I don't know who '" + args[index] + "' is!");
-                return null;
-            } else {
-                return players.get(0);
-            }
+            // List<Player> players = sender.getServer().matchPlayer(args[index]);
+        	return null;
+        	
         } else {
             if (anonymousCheck(sender)) {
                 return null;
@@ -71,4 +73,6 @@ public class HomeBukkit extends JavaPlugin {
             }
         }
     }
+    
+    
 }
