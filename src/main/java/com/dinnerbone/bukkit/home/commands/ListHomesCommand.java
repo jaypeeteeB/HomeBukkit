@@ -57,7 +57,7 @@ public class ListHomesCommand implements CommandExecutor {
                 result += home.getName();
             }
 
-            sender.sendMessage("All home(s): " + result);
+            sender.sendMessage("All your homes are: " + result);
         }
 
         return true;

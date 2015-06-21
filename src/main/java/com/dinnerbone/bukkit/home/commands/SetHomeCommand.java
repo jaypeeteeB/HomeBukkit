@@ -67,6 +67,8 @@ public class SetHomeCommand implements CommandExecutor {
         home.setLocation(((Player)sender).getLocation());
         plugin.getLogger().info("SetHome called "+home.getName()+" with Loc "+home.getX()+":"+home.getY()+":"+home.getZ()+"!");
 
+        sender.sendMessage(ChatColor.GREEN + "Setting new home '"+home.getName()+"' with at "+(int) home.getX()+":"+(int) home.getY()+":"+ (int) home.getZ()+"!");
+
         plugin.getDatabase().save(home);
 
         return true;

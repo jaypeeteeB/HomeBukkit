@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.dinnerbone.bukkit.home.commands.DelHomeCommand;
 import com.dinnerbone.bukkit.home.commands.GoHomeCommand;
 import com.dinnerbone.bukkit.home.commands.ListHomesCommand;
 import com.dinnerbone.bukkit.home.commands.SetHomeCommand;
@@ -27,6 +28,7 @@ public class HomeBukkit extends JavaPlugin {
         getCommand("listhomes").setExecutor(new ListHomesCommand(this));
         getCommand("sethome").setExecutor(new SetHomeCommand(this));
         getCommand("gohome").setExecutor(new GoHomeCommand(this));
+        getCommand("delhome").setExecutor(new DelHomeCommand(this));
 
         setupDatabase();
     }

@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import com.dinnerbone.bukkit.home.Home;
 import com.dinnerbone.bukkit.home.HomeBukkit;
 
-public class GoHomeCommand implements CommandExecutor {
+public class DelHomeCommand implements CommandExecutor {
     private final HomeBukkit plugin;
 
-    public GoHomeCommand(HomeBukkit plugin) {
+    public DelHomeCommand(HomeBukkit plugin) {
         this.plugin = plugin;
     }
 
@@ -27,12 +27,12 @@ public class GoHomeCommand implements CommandExecutor {
         if (args.length > 1 ) {
         	playerName = args[1];
         	if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED + "I don't know how to move you!");
-                plugin.getLogger().info("GoHome by not-a-player");
+                sender.sendMessage(ChatColor.RED + "I don't know who you are!");
+                plugin.getLogger().info("delHome by not-a-player");
                 return true;
             } else if ((playerName != sender.getName()) && (!sender.isOp())) {
-                sender.sendMessage(ChatColor.RED + "You don't have permission to go to other players homes");
-                plugin.getLogger().info("gohome <player> ("+playerName+") by none-op ("+sender.getName()+")");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to delete to other players homes");
+                plugin.getLogger().info("delhome <player> ("+playerName+") by none-op ("+sender.getName()+")");
                 return true;
             }         	
         } else {
@@ -45,11 +45,11 @@ public class GoHomeCommand implements CommandExecutor {
 
         if (home == null) {
             sender.sendMessage(ChatColor.RED + "I don't know where that is!");
-            plugin.getLogger().info("gohome to unknown location: "+name);
+            plugin.getLogger().info("delhome to unknown location: "+name);
         } else {
-            ((Player)sender).teleport(home.getLocation());
-            sender.sendMessage(ChatColor.GREEN + "Moving you to your home '"+name+"'");
-            plugin.getLogger().info("gohome ("+sender.getName()+") -> [" + playerName + "]:[" + name + "]");
+            plugin.getDatabase().delete(home);
+            plugin.getLogger().info("delhome ("+sender.getName()+") -> [" + playerName + "]:[" + name + "]");
+            sender.sendMessage(ChatColor.GREEN + "Forgetting your home at '"+name+"'!");
         }
 
         return true;
